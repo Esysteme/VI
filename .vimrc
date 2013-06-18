@@ -281,3 +281,81 @@ hi def link Todo TODO
 syn keyword Todo TODO FIXME XXX DEBUG
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""
+"special PHP
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"J'utilise le theme desert, que je trouve bien adapté
+colors desert 
+
+
+"LA police pour les programmeurs qui se respectent
+set gfn=ProggySquareTT:h12:cANSI
+
+
+"Met les fins de ligne du type UNIX.
+set fileformat=unix 
+
+"L'UTF-8 dominera le monde !
+set encoding=utf-8 
+
+
+"Met des x à la place des espaces qui trainent à la fin des lignes, radicales pour les voir et les supprimer 
+set listchars=trail:x 
+
+
+"Active la complétion automatique, complète dès que vous taper un mot, une fonction, sans avoir à appuyer sur TAB. 
+set complete=.,w,b,u,t,i,k~/.vim/doc/php.api 
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP 
+source ~/.vim/plugin/word_complete.vim 
+call DoWordComplete() 
+
+
+let php_sql_query=1 
+let php_htmlInStrings=1 
+
+
+
+
+function! Find(name) 
+    let l:_name = substitute(a:name, "\\s", "*", "g" ) 
+    let l:list  = system("find . -iname '*".l:_name."*' -type f -not -name \"*.swp\" | perl -ne 'print \"$.\\t$_\"'" ) 
+    let l:num   = strlen(substitute(l:list, "[^\n]", "", "g" )) 
+    if l:num < 1 
+        echo "'".a:name."' not found" 
+        return 
+    endif 
+ 
+    if l:num != 1 
+        echo l:list 
+        let l:input = input("Which ? (<enter> = nothing)\n" ) 
+ 
+        if strlen(l:input) == 0 
+            return 
+        endif 
+ 
+        if strlen(substitute(l:input, "[0-9]", "", "g" )) > 0 
+            echo "Not a number" 
+            return 
+        endif 
+ 
+        if l:input < 1 || l:input > l:num 
+            echo "Out of range" 
+            return 
+        endif 
+ 
+        let l:line = matchstr("\n".l:list, "\n".l:input."\t[^\n]*" ) 
+    else 
+        let l:line = l:list 
+    endif 
+ 
+    let l:line = substitute(l:line, "^[^\t]*\t./", "", "" ) 
+    execute ":bad ".l:line 
+    execute ":MiniBufExplorer" 
+    execute ":UMiniBufExplorer" 
+endfunction 
+ 
+command! -nargs=1 Find :call Find("<args>" ) 
+ 
+map ,f :Fi- 
