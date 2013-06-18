@@ -1,9 +1,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" Fichier .vimrc de Nicolas Gressier
+" Fichier .vimrc
 " Créé le 11 mai 2006
-" Yoshidu62@gmail.com
-" Mise à jour : 14/05/2010
-" Version 2.7
+" Nicolas Gressier (Yoshidu62@gmail.com)
+" Mise à jour : 18/06/2013 (par Aurélien LEQUOY)
+" Version 3.0
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -38,6 +38,11 @@ set ignorecase                                    " ne pas prendre en compte la 
 set nolist					  					  " on n'affiche pas les caractères non imprimables
 set listchars=eol:¶,tab:..,trail:~		  		  " paramétrage des caractères non imprimables au cas où l'on souhaiterait les afficher
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+"tester le code PHP contre les erreurs de syntaxe
+""""""""""""""""""""""""""""""""""""""""""""""""""
+map <F5> :!php -l %<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -82,6 +87,7 @@ au filetype css         set omnifunc=csscomplete#CompleteCSS
 au filetype javascript  set omnifunc=javascriptcomplete#CompleteJS
 au filetype c           set omnifunc=ccomplete#Complete
 au filetype php         set omnifunc=phpcomplete#CompletePHP
+au filetype prn         set omnifunc=phpcomplete#CompletePHP
 au filetype ruby        set omnifunc=rubycomplete#Complete
 au filetype sql         set omnifunc=sqlcomplete#Complete
 au filetype python      set omnifunc=pythoncomplete#Complete
